@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Reembolsos</title>
+</head>
+<body>
+    <h1>Lista de Reembolsos</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Descrição</th>
+                <th>Categoria</th>
+                <th>Valor</th>
+                <th>Data de Pagamento</th>
+                <th>Comprovante</th>
+                <th>Concluído</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reembolso in reembolsos %}
+                <tr>
+                    <td>{{ reembolso.nome }}</td>
+                    <td>{{ reembolso.email }}</td>
+                    <td>{{ reembolso.descricao_produto }}</td>
+                    <td>{{ reembolso.categoria }}</td>
+                    <td>R$ {{ reembolso.valor_nf }}</td>
+                    <td>{{ reembolso.data_pagamento }}</td>
+                    <td>
+                        {% if reembolso.comprovante %}
+                            <a href="{{ reembolso.comprovante.url }}">Ver Comprovante</a>
+                        {% else %}
+                            Nenhum Comprovante
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'concluir_reembolso' reembolso.id %}" class="btn btn-primary">Concluir Reembolso</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
