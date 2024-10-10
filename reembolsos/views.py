@@ -25,7 +25,7 @@ def concluir_reembolso(request, reembolso_id):
         form = ComprovanteForm(request.POST, request.FILES)
         if form.is_valid():
             # Salva o comprovante no reembolso
-            reembolso.comprovante_reembolso = request.FILES['comprovante_reembolso']
+            reembolso.comprovante = request.FILES['comprovante_reembolso']
             reembolso.concluido = True  # Marca como concluído
             reembolso.save()  # Salva as alterações
 
@@ -35,7 +35,7 @@ def concluir_reembolso(request, reembolso_id):
     else:
         form = ComprovanteForm()
 
-    return render(request, 'concluir_reembolso.html', {'reembolso': reembolso, 'form': form})
+    return render(request, 'reembolsos/concluir_reembolso.html', {'reembolso': reembolso, 'form': form})
 
 def listar_reembolsos_concluidos(request):
     reembolsos_concluidos = Reembolso.objects.filter(concluido=True)  # Filtra reembolsos com status 'Concluído'
