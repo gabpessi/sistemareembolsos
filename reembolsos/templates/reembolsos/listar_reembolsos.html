@@ -16,6 +16,7 @@
                 <th>Data de Pagamento</th>
                 <th>Comprovante</th>
                 <th>Concluído</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -28,8 +29,8 @@
                     <td>R$ {{ reembolso.valor_nf }}</td>
                     <td>{{ reembolso.data_pagamento }}</td>
                     <td>
-                        {% if reembolso.comprovante %}
-                            <a href="{{ reembolso.comprovante.url }}">Ver Comprovante</a>
+                        {% if reembolso.comprovante_pedido %}
+                            <a href="{{ reembolso.comprovante_pedido.url }}">Ver Comprovante</a>
                         {% else %}
                             Nenhum Comprovante
                         {% endif %}
@@ -37,7 +38,17 @@
                     <td>
                         <a href="{% url 'concluir_reembolso' reembolso.id %}" class="btn btn-primary">Concluir Reembolso</a>
                     </td>
+                    <td>
+                        <a href="{% url 'remover_reembolso' reembolso.id %}" onclick="return confirm('Tem certeza que deseja remover este pedido?');">Remover</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'editar_reembolso' reembolso.id %}">Editar</a>  <!-- Link para editar o reembolso -->
+                    </td>
                 </tr>
+                {% empty %}
+        <tr>
+            <td colspan="7">Nenhum pedido de reembolso encontrado.</td>
+        </tr>
             {% endfor %}
         </tbody>
     </table>

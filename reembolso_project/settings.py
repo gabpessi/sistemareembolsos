@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'reembolso_project.urls'
@@ -105,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
 TIME_ZONE = 'UTC'
 
@@ -122,12 +124,22 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Configurações de e-mail para SendGrid
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "apikey"  # Isso deve ser "apikey"
+EMAIL_HOST_PASSWORD = "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"  # Cole aqui sua API Key do SendGrid
+DEFAULT_FROM_EMAIL = "ministerio@einsteinfloripa.com.br"  # Endereço que será usado como remetente padrão
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.seuprovedor.com'  # Substitua pelo host do seu provedor de e-mail
-EMAIL_PORT = 587  # ou 465 para SSL
-EMAIL_USE_TLS = True  # Ou False se estiver usando SSL
-EMAIL_HOST_USER = 'gabpessi@hotmail.com'  # Seu e-mail
-EMAIL_HOST_PASSWORD = 'sua_senha'  # Sua senha
-DEFAULT_FROM_EMAIL = 'seu_email@dominio.com'  # E-mail padrão
+
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+MEDIA_URL = '/media/'  # URL pública para acessar os arquivos
+MEDIA_ROOT = os.path.join(BASE_DIR, 'comprovantes')
+
+LOGIN_REDIRECT_URL = '/usuarios/redirecionar/'
+LOGIN_URL = '/usuarios/login/'

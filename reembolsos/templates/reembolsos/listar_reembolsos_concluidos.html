@@ -14,7 +14,9 @@
             <th>Categoria</th>
             <th>Valor</th>
             <th>Data de Pagamento</th>
+            <th>Comprovante do Pedido</th> <!-- Nova coluna para o comprovante do pedido -->
             <th>Comprovante de Reembolso</th> <!-- Coluna para o comprovante de reembolso -->
+            <th>Ações</th>
         </tr>
         {% for reembolso in reembolsos_concluidos %}
         <tr>
@@ -25,11 +27,26 @@
             <td>R$ {{ reembolso.valor_nf }}</td>
             <td>{{ reembolso.data_pagamento }}</td>
             <td>
+                {% if reembolso.comprovante_pedido %}
+                    <a href="{{ reembolso.comprovante_pedido.url }}">Ver Comprovante do Pedido</a>
+                {% else %}
+                    Nenhum Comprovante
+                {% endif %}
+            </td>
+            <td>
                 {% if reembolso.comprovante_reembolso %}
                     <a href="{{ reembolso.comprovante_reembolso.url }}">Ver Comprovante do Reembolso</a>
                 {% else %}
                     Sem Comprovante
                 {% endif %}
+            </td>
+            <td>
+                {% if not reembolso.concluido %}
+                    <a href="{% url 'remover_reembolso' reembolso.id %}" onclick="return confirm('Tem certeza que deseja remover este pedido?');">Remover</a>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'remover_reembolso_concluido' reembolso.id %}" onclick="return confirm('Tem certeza que deseja remover este pedido?');">Remover</a>
             </td>
         </tr>
         {% empty %}

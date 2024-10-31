@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Reembolso</title>
+</head>
+<body>
+    <h1>Editar Reembolso</h1>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Exibe o formulário -->
+        <button type="submit">Salvar Alterações</button>
+    </form>
+
+    <a href="{% url 'listar_reembolsos' %}">Voltar para lista de reembolsos</a>
+</body>
+</html>

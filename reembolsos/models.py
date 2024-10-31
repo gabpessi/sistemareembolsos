@@ -21,8 +21,9 @@ class Reembolso(models.Model):
     categoria = models.CharField(max_length=50, choices=CATEGORIAS_REEMBOLSO)
     valor_nf = models.DecimalField("Valor da Nota Fiscal", max_digits=10, decimal_places=2)
     data_pagamento = models.DateField("Data do Pagamento")
-    comprovante = models.FileField(upload_to='reembolsos/concluidos') 
-    
+    #comprovante = models.FileField(upload_to='reembolsos/concluidos') 
+    comprovante_pedido = models.FileField(upload_to='comprovantes/pedido/', null=True, blank=True)  # Comprovante do solicitante
+    comprovante_reembolso = models.FileField(upload_to='comprovantes/reembolso/', null=True, blank=True)  # Comprovante do reembolso
     concluido = models.BooleanField(default=False)
     
     def __str__(self):
