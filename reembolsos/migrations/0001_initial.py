@@ -20,6 +20,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('nome', models.CharField(max_length=100)),
                 ('email', models.EmailField(max_length=254)),
+                
                 ('descricao_produto', models.TextField(verbose_name='Descreva o produto/serviço')),
                 ('categoria', models.CharField(choices=[('Simulado', 'Simulado'), ('Aulão', 'Aulão'), ('Eventos', 'Eventos'), ('Brindes', 'Brindes'), ('Documentos', 'Documentos'), ('Domínio do site', 'Domínio do site'), ('Google Meets', 'Google Meets'), ('Processo Seletivo de Alunos', 'Processo Seletivo de Alunos'), ('Processo Seletivo de Organizadores/Docentes', 'Processo Seletivo de Organizadores/Docentes'), ('Outro', 'Outro')], max_length=50)),
                 ('valor_nf', models.DecimalField(decimal_places=2, max_digits=10, verbose_name='Valor da Nota Fiscal')),

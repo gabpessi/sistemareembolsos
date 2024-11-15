@@ -14,14 +14,25 @@ class Reembolso(models.Model):
         ('Processo Seletivo de Organizadores/Docentes', 'Processo Seletivo de Organizadores/Docentes'),
         ('Outro', 'Outro'),
     ]
+
+    CATEGORIAS_DEPARTAMENTO = [
+        ('Hogwarts', 'Hogwarts'),
+        ('Embaixada', 'Embaixada'),
+        ('Times Square- Captação', 'Times Square- Captação'),
+        ('Ministério', 'Ministério'),
+        ('Times Square- Mkt', 'Times Square- Mkt'),
+        ('Vale do Silício', 'Vale do Silício'),
+        ('Presidência', 'Presidência'),
+        ('Processo Seletivo', 'Processo Seletivo'),
+    ]
     
     nome = models.CharField(max_length=100)
     email = models.EmailField()
+    departamento = models.CharField(max_length=50, choices=CATEGORIAS_DEPARTAMENTO)
     descricao_produto = models.TextField("Descreva o produto/serviço")
     categoria = models.CharField(max_length=50, choices=CATEGORIAS_REEMBOLSO)
-    valor_nf = models.DecimalField("Valor da Nota Fiscal", max_digits=10, decimal_places=2)
-    data_pagamento = models.DateField("Data do Pagamento")
-    #comprovante = models.FileField(upload_to='reembolsos/concluidos') 
+    valor_nf = models.DecimalField("Valor da Nota Fiscal (apenas números)", max_digits=10, decimal_places=2)
+    data_pagamento = models.DateField("Data do Pagamento")    
     comprovante_pedido = models.FileField(upload_to='comprovantes/pedido/', null=True, blank=True)  # Comprovante do solicitante
     comprovante_reembolso = models.FileField(upload_to='comprovantes/reembolso/', null=True, blank=True)  # Comprovante do reembolso
     concluido = models.BooleanField(default=False)

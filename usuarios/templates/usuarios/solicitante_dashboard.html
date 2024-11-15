@@ -5,9 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solicitante Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'reembolsos/style.css' %}">
+    <script src="{% static 'reembolsos/script.js' %}"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
-<body>
-    <h1>Bem-vindo, Solicitante!</h1>
-    <p>Esta é sua página de dashboard.</p>
+<body>   
+    <nav style="justify-content: end;">        
+        
+          {% load static %}
+          <img class="logo-img" src="{% static 'reembolsos/img/logo-einstein.png' %}">
+    </nav>
+    <div class="dashboard-container">
+        <div class="dashboard-box">
+            <h1>Solicitação confirmada!</h1>
+            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="green" class="bi bi-check-circle" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
+            </svg>
+            <p>O seu pedido foi confirmado! Verifique no seu email a confirmação do pedido (ele pode estar no lixo eletrônico). </p>
+            <a class="solicitacao-btn" href=" {% url 'solicitar_reembolso' %} ">Fazer uma nova solicitação</a>
+        </div>
+</div>
 </body>
 </html>

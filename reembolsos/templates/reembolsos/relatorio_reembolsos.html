@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'reembolsos/style.css' %}">    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>        
+        <a href="{% url 'admin_dashboard' %}"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
+          </svg> Página Inicial</a>
+          {% load static %}
+          <img class="logo-img" src="{% static 'reembolsos/img/logo-einstein.png' %}">
+    </nav>
+    <div class="relatorio-container">
+        <div class="relatorio-titulos">
+            <h1>Relatório de Reembolsos</h1>
+            <p>Total de reembolsos concluídos: R$ {{ soma_total }}</p>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Mês</th>
+                    <th>Total Gasto (R$)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for mes_ano, total in relatorio_mensal.items %}
+                <tr>
+                    <td>{{ mes_ano }}</td>
+                    <td>{{ total }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</div>
+</body>
+</html>
+
+

@@ -120,6 +120,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / "reembolso_project/static"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -130,8 +131,9 @@ EMAIL_HOST = "smtp.sendgrid.net"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "apikey"  # Isso deve ser "apikey"
-EMAIL_HOST_PASSWORD = "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"  # Cole aqui sua API Key do SendGrid
+EMAIL_HOST_PASSWORD = "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"  # Cole aqui sua API Key do SendGrid
 DEFAULT_FROM_EMAIL = "ministerio@einsteinfloripa.com.br"  # Endereço que será usado como remetente padrão
+EMAIL_TIMEOUT = 30
 
 
 

@@ -2,13 +2,25 @@
 <html>
 <head>
     <title>Solicitar Reembolso</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'reembolsos/style.css' %}">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Solicitar Reembolso</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Enviar Solicitação</button>
-    </form>
+    <nav>      
+          {% load static %}
+          <img class="logo-img" src="{% static 'reembolsos/img/logo-einstein.png' %}">
+    </nav>
+    <div class="form-container">
+        <h1>Solicitar Reembolso</h1>
+        <form class="solicitar-form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="solicitar-btn" type="submit">Enviar Solicitação</button>
+        </form>
+    </div>
 </body>
 </html>

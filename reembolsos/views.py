@@ -5,6 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from django.core.mail import EmailMessage
 from django.conf import settings
+from django.db.models import Q
+from django.db.models import Sum
+from datetime import datetime
 
 def is_admin(user):
     return user.is_superuser
@@ -17,15 +20,59 @@ def solicitar_reembolso(request):
             reembolso = form.save(commit=False)
             reembolso.solicitante = request.user  # Associa o solicitante ao usuário logado
             reembolso.save()
-            return redirect('solicitante_dashboard')
+
+            # Enviar e-mail para confirmar o recebimento do pedido de reembolso
+            assunto = 'Pedido de Reembolso Recebido'
+            mensagem = f'Olá {reembolso.nome},\n\nSeu pedido de reembolso foi recebido e está sendo processado. Aguarde até que ele seja concluído.\n\nAtenciosamente,\nEquipe do Einstein'
+            email_remetente = settings.DEFAULT_FROM_EMAIL
+            email_destinatario = [reembolso.email]  # O e-mail do solicitante
+
+            # Cria e envia o e-mail
+            email = EmailMessage(
+                assunto,
+                mensagem,
+                email_remetente,
+                email_destinatario
+            )
+            email.send()
+
+            return redirect('solicitante_dashboard')  # Redireciona para o dashboard do solicitante
     else:
         form = ReembolsoForm()
+
     return render(request, 'reembolsos/solicitar_reembolso.html', {'form': form})
+
 
 @user_passes_test(is_admin)
 @login_required
 def listar_reembolsos(request):
     reembolsos = Reembolso.objects.filter(concluido=False)
+     # Obtendo os parâmetros de filtro da URL
+    departamento = request.GET.get('departamento')
+    categoria = request.GET.get('categoria')
+    busca_nome = request.GET.get('busca_nome')
+    ordem_data = request.GET.get('ordem_data')
+
+    # Aplicando os filtros
+    if departamento:
+        reembolsos = reembolsos.filter(departamento=departamento)
+    
+    if categoria:
+        reembolsos = reembolsos.filter(categoria=categoria)
+    
+    if busca_nome:
+        reembolsos = reembolsos.filter(
+            Q(nome__icontains=busca_nome) | Q(descricao_produto__icontains=busca_nome)
+        )
+    
+   
+    if ordem_data == 'maisRecente':
+        reembolsos = reembolsos.order_by('-data_pagamento')
+    elif ordem_data == 'maisAntigo':
+        reembolsos = reembolsos.order_by('data_pagamento')
+
+    
+    
     return render(request, 'reembolsos/listar_reembolsos.html', {'reembolsos': reembolsos})
 
 @user_passes_test(is_admin)
@@ -74,9 +121,38 @@ def concluir_reembolso(request, reembolso_id):
 @user_passes_test(is_admin)
 @login_required
 def listar_reembolsos_concluidos(request):
-    reembolsos_concluidos = Reembolso.objects.filter(concluido=True)  # Filtra reembolsos com status 'Concluído'
+    # Obtém todos os reembolsos concluídos inicialmente
+    reembolsos_concluidos = Reembolso.objects.filter(concluido=True)
+
+    # Obtendo os parâmetros de filtro da URL
+    departamento = request.GET.get('departamento')
+    categoria = request.GET.get('categoria')
+    busca_nome = request.GET.get('busca_nome')
+    ordem_data = request.GET.get('ordem_data')
+
+    # Aplicando os filtros
+    if departamento:
+        reembolsos_concluidos = reembolsos_concluidos.filter(departamento=departamento)
+    
+    if categoria:
+        reembolsos_concluidos = reembolsos_concluidos.filter(categoria=categoria)
+    
+    if busca_nome:
+        reembolsos_concluidos = reembolsos_concluidos.filter(
+            Q(nome__icontains=busca_nome) | Q(descricao_produto__icontains=busca_nome)
+        )
+    
+    # Ordenando por data de pagamento
+    if ordem_data == 'maisRecente':
+        reembolsos_concluidos = reembolsos_concluidos.order_by('-data_pagamento')
+    elif ordem_data == 'maisAntigo':
+        reembolsos_concluidos = reembolsos_concluidos.order_by('data_pagamento')
+
+    # Renderizando o template com os reembolsos filtrados
     return render(request, 'reembolsos/listar_reembolsos_concluidos.html', 
-    {'reembolsos_concluidos': reembolsos_concluidos})
+                  {'reembolsos_concluidos': reembolsos_concluidos})
+
+
 
 @user_passes_test(is_admin)
 @login_required
@@ -109,3 +185,37 @@ def editar_reembolso(request, reembolso_id):
         form = ReembolsoForm(instance=reembolso)  # Preenche o form com os dados atuais
     
     return render(request, 'reembolsos/editar_reembolso.html', {'form': form, 'reembolso': reembolso})
+
+
+@user_passes_test(is_admin)
+@login_required
+def relatorio_reembolsos(request):
+    # Filtra apenas reembolsos concluídos
+    reembolsos_concluidos = Reembolso.objects.filter(concluido=True)
+
+    # Inicializa o dicionário do relatório mensal
+    relatorio_mensal = {}
+
+    # Itera sobre os reembolsos concluídos
+    for reembolso in reembolsos_concluidos:
+        # Formata a data de pagamento para MM/YYYY
+        mes_ano = reembolso.data_pagamento.strftime('%m/%Y')
+        
+        # Se o mês/ano já está no dicionário, soma o valor; caso contrário, cria uma nova entrada
+        if mes_ano in relatorio_mensal:
+            relatorio_mensal[mes_ano] += reembolso.valor_nf
+        else:
+            relatorio_mensal[mes_ano] = reembolso.valor_nf
+
+    # Ordena o relatório do mais recente para o mais antigo
+    relatorio_mensal = dict(sorted(relatorio_mensal.items(), key=lambda x: datetime.strptime(x[0], '%m/%Y'), reverse=True))
+
+    # Calcula a somatória total dos reembolsos concluídos
+    soma_total = reembolsos_concluidos.aggregate(Sum('valor_nf'))['valor_nf__sum'] or 0
+
+    # Passa os dados para o template
+    context = {
+        'relatorio_mensal': relatorio_mensal,
+        'soma_total': soma_total,
+    }
+    return render(request, 'reembolsos/relatorio_reembolsos.html', context)

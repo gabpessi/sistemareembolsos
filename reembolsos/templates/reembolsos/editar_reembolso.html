@@ -3,16 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Editar Reembolso</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'reembolsos/style.css' %}">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
+    <nav style="justify-content: end;">      
+        {% load static %}
+        <img class="logo-img" src="{% static 'reembolsos/img/logo-einstein.png' %}">
+  </nav>
+  <div class="form-container">
     <h1>Editar Reembolso</h1>
     
-    <form method="post" enctype="multipart/form-data">
+    <form class="editar-form" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}  <!-- Exibe o formulário -->
-        <button type="submit">Salvar Alterações</button>
+        {{ form.as_p }}  
+        <button class="solicitar-btn" type="submit">Salvar Alterações</button>
     </form>
-
-    <a href="{% url 'listar_reembolsos' %}">Voltar para lista de reembolsos</a>
+  
+    </div>
 </body>
 </html>

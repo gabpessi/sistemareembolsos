@@ -1,56 +1,119 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-    <title>Lista de Reembolsos</title>
+    <meta charset="UTF-8">
+    <title>Reembolsos Concluídos</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'reembolsos/style.css' %}">
+    <script src="{% static 'reembolsos/script.js' %}"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Lista de Reembolsos</h1>
+    <nav>        
+        <a href="{% url 'admin_dashboard' %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5"/>
+          </svg> Página Inicial</a>
+          {% load static %}
+          <img class="logo-img" src="{% static 'reembolsos/img/logo-einstein.png' %}">
+    </nav>
+    <h1 class="listar-h1">Reembolsos Pendentes</h1>
+    <form class="form-lista" method="GET" action="{% url 'listar_reembolsos' %}">
+        <div class="filtro-form">
+            <label for="departamento">Departamento:</label>
+            <select name="departamento" id="departamentoFiltro">
+                <option value="">Todos</option>
+                <option value="Hogwarts">Hogwarts</option>
+                <option value="Embaixada">Embaixada</option>
+                <option value="Times Square- Captação">Times Square- Captação</option>
+                <option value="Ministério">Ministério</option>
+                <option value="Vale do Silício">Vale do Silício</option>
+                <option value="Presidência">Presidência</option>
+                <option value="Processo Seletivo">Processo Seletivo</option>            
+            </select>
+        </div>
+
+        <div class="filtro-form">
+            <label for="categoria">Categoria:</label>
+            <select name="categoria" id="categoriaFiltro">
+                <option value="">Todas</option>
+                <option value="Simulado">Simulado</option>
+                <option value="Aulão">Aulão</option>
+                <option value="Eventos">Eventos</option>
+                <option value="Brindes">Brindes</option>
+                <option value="Documentos">Documentos</option>
+                <option value="Domínio do site">Domínio do site</option>
+                <option value="Processo Seletivo de Alunos">Processo Seletivo de Alunos</option>
+                <option value="Processo Seletivo de Organizadores/Docentes">Processo Seletivo de Organizadores/Docentes</option>
+                <option value="Google Meets">Google Meets</option>
+                <option value="Outro">Outro</option>            
+            </select>
+        </div>
+
+        <div class="filtro-form">
+            <label for="busca_nome">Nome/Descrição:</label>
+            <input type="text" name="busca_nome" id="buscaNome" placeholder="Digite um nome ou descrição">
+        </div>
+
+        <div class="filtro-form">
+            <label for="ordem_data">Ordenar por Data:</label>
+            <select name="ordem_data" id="ordemData">
+                <option value="">Selecionar</option>
+                <option value="maisRecente">Mais Recente</option>
+                <option value="maisAntigo">Mais Antigo</option>
+            </select>
+        </div>
+
+        <button class="filtrar-btn" type="submit">Filtrar</button>
+    </form>           
+    
+    <div class="table-container" id="scroll-bottom" style="overflow-x: auto;">
     <table>
         <thead>
             <tr>
                 <th>Nome</th>
                 <th>Email</th>
-                <th>Descrição</th>
+                <th>Departamento</th>
+                <th>Descrição</th>          
                 <th>Categoria</th>
                 <th>Valor</th>
                 <th>Data de Pagamento</th>
-                <th>Comprovante</th>
-                <th>Concluído</th>
+                <th>Comprovante do Pedido</th>                 
                 <th>Ações</th>
             </tr>
         </thead>
-        <tbody>
-            {% for reembolso in reembolsos %}
-                <tr>
-                    <td>{{ reembolso.nome }}</td>
-                    <td>{{ reembolso.email }}</td>
-                    <td>{{ reembolso.descricao_produto }}</td>
-                    <td>{{ reembolso.categoria }}</td>
-                    <td>R$ {{ reembolso.valor_nf }}</td>
-                    <td>{{ reembolso.data_pagamento }}</td>
-                    <td>
-                        {% if reembolso.comprovante_pedido %}
-                            <a href="{{ reembolso.comprovante_pedido.url }}">Ver Comprovante</a>
-                        {% else %}
-                            Nenhum Comprovante
-                        {% endif %}
-                    </td>
-                    <td>
-                        <a href="{% url 'concluir_reembolso' reembolso.id %}" class="btn btn-primary">Concluir Reembolso</a>
-                    </td>
-                    <td>
-                        <a href="{% url 'remover_reembolso' reembolso.id %}" onclick="return confirm('Tem certeza que deseja remover este pedido?');">Remover</a>
-                    </td>
-                    <td>
-                        <a href="{% url 'editar_reembolso' reembolso.id %}">Editar</a>  <!-- Link para editar o reembolso -->
-                    </td>
-                </tr>
-                {% empty %}
+        {% for reembolso in reembolsos %}
         <tr>
-            <td colspan="7">Nenhum pedido de reembolso encontrado.</td>
+            <td>{{ reembolso.nome }}</td>
+            <td>{{ reembolso.email }}</td>
+            <td>{{ reembolso.departamento }}</td>          
+            <td>{{ reembolso.descricao_produto }}</td>
+            <td>{{ reembolso.categoria }}</td>
+            <td>R$ {{ reembolso.valor_nf }}</td>
+            <td>{{ reembolso.data_pagamento }}</td>
+            <td>
+                {% if reembolso.comprovante_pedido %}
+                    <a class="comprovante-btn" href="{{ reembolso.comprovante_pedido.url }}">Visualizar</a>
+                {% else %}
+                    Nenhum Comprovante
+                {% endif %}
+            </td>
+            
+            
+            <td>
+                <div class="editar-remover">
+                    <a class="editar-btn" href=" {%url 'editar_reembolso' reembolso.id %}">Editar</a>
+                    <a class="remover-btn"  href="{% url 'remover_reembolso' reembolso.id %}" onclick="return confirm('Tem certeza que deseja remover este pedido?');">Remover</a>
+                </div>
+            </td>
         </tr>
-            {% endfor %}
-        </tbody>
+        {% empty %}
+        <tr>
+            <td colspan="7">Nenhum reembolso pendente encontrado.</td>
+        </tr>
+        {% endfor %}
     </table>
+</div>
 </body>
 </html>

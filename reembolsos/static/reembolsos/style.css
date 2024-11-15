@@ -1,0 +1,546 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #E6F3F9;
+    font-family: 'Roboto', sans-serif;   
+    overflow-x: hidden;
+    
+}
+
+.filtro-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;   
+    margin-right: 0;
+}
+
+.form-lista {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    width: 95%;    
+    margin: 10px auto 50px auto;    
+    padding: 30px;
+    height: auto; 
+    border-radius: 9px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    font-size: 14px;
+    gap: 10px;
+} 
+
+
+h1 {    
+    color: #2D1547;    
+    font-weight: 600;    
+    font-size: 24px;
+   
+}
+
+.listar-h1 {
+    margin-left: 45px;
+    padding: 50px 0;
+}
+
+
+
+
+.table-container {
+    
+    width: 95%;
+    
+    margin: 10px auto; 
+    overflow-x: auto;  
+    border-radius: 9px;
+    background-color: #fff;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+
+table {
+    width: 100%; 
+    border-collapse: collapse; 
+}
+
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;
+    word-wrap: break-word; 
+    width: 10%; 
+    max-width: 180px; 
+    min-width: 120px; 
+}
+
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+
+
+
+.comprovante-btn {
+    text-decoration: none;
+    color: #3a1c5c;
+    padding: 8px 12px;
+    font-weight: 600;
+    border-radius: 11px;
+    transition: all 0.3s;
+}
+
+.comprovante-btn:hover {
+    color: #fff;
+    background-color: #3a1c5c;
+}
+
+
+.remover-btn, .concluir-btn, .editar-btn {
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.remover-btn {
+    color: #CD4A33;
+}
+
+.remover-btn:hover {
+    color: #891500;
+}
+
+.concluir-btn {
+    color: #4CB000;
+}
+
+.concluir-btn:hover {
+    color: #3C8900;
+}
+
+.editar-btn {
+    color: #54647F;
+}
+
+.editar-remover {
+    display: flex;
+    flex-direction: column;
+    gap: 5px    ;
+}
+
+nav {
+    background-color: #fff;
+    height: 70px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    
+}
+
+nav a {
+    color: #00163A;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding:  5px;
+    border-radius: 9px;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+nav a:hover {
+    background-color: #00163A;
+    color: #fff;    
+    
+    
+}
+
+
+.logo-img {
+    width: 150px;
+}
+
+
+.filtrar-btn {
+    width: 120px;
+    height: 30px;
+    border: none;
+    border-radius: 9px;
+    letter-spacing: 1.2;
+    font-weight: 600;
+    color: #fff;    
+    font-size: 14px;          
+    background-color: #522781;
+    cursor: pointer;
+    transition: background-color 0.3s
+}
+
+.filtrar-btn:hover {
+    background-color: #3A1C5C;
+    
+}
+
+
+
+.filtro-form select {
+    height: 40px;
+    width: 100px;
+    border-color: #ddd;
+    border-radius: 9px;
+    
+}
+
+.filtro-form input {
+    width: 150px;
+    height: 40px;
+    padding-left: 7px;
+    border: 1px solid #ddd;
+    border-radius: 9px;
+    
+}
+
+.input-text::placeholder {
+    color: #bbb;
+}
+
+
+input, select {
+    font-size: 14px; 
+}
+
+input:focus, select:focus {
+    background-color: #f0f0f0; 
+    border: 2px solid #2D1547;
+    
+    outline: none; 
+}
+
+/* DASHBOARDS /////*/
+
+.dashboard-container {     
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+    
+}
+
+.dashboard-box {
+    background-color: #fff;
+    padding: 80px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 9px;
+    margin-top: 150px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.dashboard-container svg {
+    margin: 30px 0;
+}
+
+
+.dashboard-box p {
+    padding: 20 100px;
+}
+
+.solicitacao-btn {
+    color: #00163A;
+    text-decoration: none;
+    font-weight: 600;
+    padding-top: 30px;
+    transition: color 0.3s;
+}
+
+.solicitacao-btn:hover, .solicitacao-btn:active {
+    color: #522781;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* SOLICITAÇÃO FORMS ///*/
+
+.form-container {
+    display: flex;   
+    align-items: center;    
+    flex-direction: column;
+    margin: 40px auto;
+    width: 500px;   
+    padding: 50px 0;
+    background-color: #fff;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 9px;
+
+}
+
+
+textarea {
+    resize: none; 
+    overflow: auto; 
+} 
+
+
+.solicitar-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    
+}
+
+.form-container h1 {
+    margin-bottom: 30px;
+}
+
+
+.solicitar-form input:not([type="checkbox"]), .solicitar-form select, .solicitar-form textarea {
+    font-family: inherit;
+    margin: 5px 0;
+    width: 400px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    
+}
+
+.solicitar-form p {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+
+.solicitar-btn {
+    
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #2D1547;
+    margin: 20px auto 0 auto;    
+    width: 180px;
+    height: 40px;
+    border: none;
+    border-radius: 9px;
+    letter-spacing: 1.2;    
+    cursor: pointer;
+    transition: background-color 0.3s;    
+}
+
+.solicitar-btn:hover {
+    background-color: #3A1C5C;       
+    
+}
+
+
+/* login /////////*/
+
+.login-container {
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; 
+}
+
+.login-box {
+    background-color: #ffffff;
+    margin: 0 2rem;
+    padding: 2rem 8rem 4rem 8rem;
+    width: 100%;
+    max-width: 570px;
+    height: 566px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-img {
+    width: 100px;
+    margin-bottom: 1.5rem;
+}
+
+.login-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.login-info label {
+    color: #00163A;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+}
+
+.login-info input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 9px;
+    font-size: 1rem;
+    outline: none;
+}
+
+input:focus, select:focus {
+    background-color: #f0f0f0; 
+    border: 1px solid #2D1547;
+    
+    outline: none; 
+}
+
+.login-box button {
+    background-color: #00163A;
+    color: #fff;
+    font-size: 1rem;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.login-box button:hover {
+    background-color: #3A1C5C;
+}
+
+.login-box a {
+    color: #004080;
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+.login-box a:hover {
+    text-decoration: underline;
+}
+
+
+.adm-dashboard-container .links { 
+    height: 50vh;  
+    gap: 30px   ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+}
+
+.adm-dashboard-container a {  
+    width: 200px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.adm-dashboard-container h1 {
+    padding: 50px 45px;   
+}
+
+
+
+.solicitar-form #id_comprovante_pedido-clear_id,
+.solicitar-form label[for="comprovante_pedido-clear_id"] {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+
+.editar-form {
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
+    
+}
+
+.editar-form input:not([type="checkbox"]), .editar-form select, .editar-form textarea {
+    font-family: inherit;
+    margin: 5px 0;
+    width: 400px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    
+}
+
+.editar-form p:not(:last-of-type) {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+}
+
+.editar-form p:last-of-type {
+   
+    margin: 10px 0 10px 40px;
+    
+}
+
+.solicitar-btn {
+    
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: #2D1547;
+    margin: 20px auto 0 auto;    
+    width: 180px;
+    height: 40px;
+    border: none;
+    border-radius: 9px;
+    letter-spacing: 1.2;    
+    cursor: pointer;
+    transition: background-color 0.3s;    
+}
+
+.editar-form #id_comprovante_pedido {
+    width: 330px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+/* RELATORIOS */
+
+.relatorio-container  {
+    
+    padding: 0 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.relatorio-container tbody {
+    background-color: #fff;
+}
+
+.relatorio-titulos {
+    padding: 50px 0;
+}
+
+.relatorio-container h1 {
+    margin-bottom: 10px;
+}
+
+.concluir-container {
+    padding: 50px 45px;
+}
+
+.concluir-container h1 {
+    margin-bottom: 15px;
+}
+

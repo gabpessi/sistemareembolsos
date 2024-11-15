@@ -4,7 +4,7 @@ from .models import Reembolso
 class ReembolsoForm(forms.ModelForm):
     class Meta:
         model = Reembolso
-        fields = ['nome', 'email', 'descricao_produto', 'categoria', 'valor_nf', 'data_pagamento', 'comprovante_pedido']
+        fields = ['nome', 'email', 'departamento', 'descricao_produto', 'categoria', 'valor_nf', 'data_pagamento', 'comprovante_pedido']
         widgets = {
             'data_pagamento': forms.DateInput(attrs={'type': 'date'}),
         }
