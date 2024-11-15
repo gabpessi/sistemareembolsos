@@ -27,6 +27,6 @@ def admin_dashboard(request):
 @login_required
 def dashboard_redirect(request):
     if request.user.is_superuser:
-        return redirect('admin_dashboard')  # Redireciona para o dashboard do admin
+        return redirect('admin_dashboard') 
     else:
-        return redirect('solicitar_reembolso')  # Redireciona para a página de solicitar reembolso
+        return redirect('solicitar_reembolso')  
